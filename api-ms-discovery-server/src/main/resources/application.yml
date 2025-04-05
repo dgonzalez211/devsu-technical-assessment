@@ -1,0 +1,73 @@
+spring:
+  application:
+    name: api-ms-discovery-server
+  profiles:
+    active: ${ACTIVE_PROFILE:default}
+  cloud:
+    config:
+      enabled: ${CONFIG_SERVER_ENABLED:false}
+  boot:
+    admin:
+      context-path: /admin
+
+server:
+  port: 8761
+  tomcat:
+    max-threads: 100
+    min-spare-threads: 20
+    connection-timeout: 5000
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  instance:
+    hostname: ${HOSTNAME:localhost}
+    prefer-ip-address: ${PREFER_IP:false}
+  server:
+    enable-self-preservation: ${SELF_PRESERVATION:true}
+    renewal-percent-threshold: 0.85
+    eviction-interval-timer-in-ms: 60000
+    wait-time-in-ms-when-sync-empty: 5
+    response-cache-update-interval-ms: 30000
+
+logging:
+  level:
+    root: INFO
+    com.netflix.eureka: INFO
+    com.netflix.discovery: INFO
+    org.springframework.cloud: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/eureka-server.log
+  logback:
+    rollingpolicy:
+      max-file-size: 10MB
+      max-history: 10
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: false
+  info:
+    env:
+      enabled: true
+    build:
+      enabled: true
+    git:
+      enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true

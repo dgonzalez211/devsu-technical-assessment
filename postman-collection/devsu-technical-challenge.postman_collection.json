@@ -1,0 +1,396 @@
+{
+	"info": {
+		"_postman_id": "1abfec90-7878-4548-aa9c-6ae847c0fc02",
+		"name": "devsu-technical-challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43546610",
+		"_collection_link": "https://diegogonzalez-353157.postman.co/workspace/DIego-Gonzalez's-Workspace~b561359f-8072-4455-826b-5451fd6103ac/collection/43546610-1abfec90-7878-4548-aa9c-6ae847c0fc02?action=share&source=collection_link&creator=43546610"
+	},
+	"item": [
+		{
+			"name": "api-ms-customer-identity",
+			"item": [
+				{
+					"name": "customers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/customers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customers"
+							]
+						},
+						"description": "Generated from cURL: curl -X GET \"http://localhost:8081/customers\" \\\r\n  -H \"Content-Type: application/json\""
+					},
+					"response": []
+				},
+				{
+					"name": "customer-by-id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/customers/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customers",
+								"1"
+							]
+						},
+						"description": "Generated from cURL: curl -X GET \"http://localhost:8081/customers/1\" \\\r\n  -H \"Content-Type: application/json\""
+					},
+					"response": []
+				},
+				{
+					"name": "create-customer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Juan\",\r\n    \"lastName\": \"Perez\",\r\n    \"email\": \"juan.perez@fmail.com\",\r\n    \"phoneNumber\": \"+573001234567\",\r\n    \"address\": \"Calle 123 #45-67\",\r\n    \"customerId\": \"ABC12345\",\r\n    \"password\": \"password123\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/customers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customers"
+							]
+						},
+						"description": "Generated from cURL: curl -X POST \"http://localhost:8081/customers\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{\r\n    \"firstName\": \"Juan\",\r\n    \"lastName\": \"Pérez\",\r\n    \"email\": \"juan.perez@example.com\",\r\n    \"phoneNumber\": \"+573001234567\",\r\n    \"address\": \"Calle 123 #45-67\",\r\n    \"customerId\": \"ABC12345\",\r\n    \"password\": \"password123\"\r\n  }'"
+					},
+					"response": []
+				},
+				{
+					"name": "delete-customer",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/customers/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customers",
+								"1"
+							]
+						},
+						"description": "Generated from cURL: curl -X DELETE \"http://localhost:8081/customers/1\" \\\r\n  -H \"Content-Type: application/json\""
+					},
+					"response": []
+				},
+				{
+					"name": "update-customer",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"uuid\": \"550e8400-e29b-41d4-a716-446655440000\",\r\n    \"firstName\": \"Juan\",\r\n    \"lastName\": \"Perez Gomez\",\r\n    \"email\": \"juan.perez@gmail.com\",\r\n    \"phoneNumber\": \"+573001234567\",\r\n    \"address\": \"Avenida 456 #78-90\",\r\n    \"status\": \"ACTIVE\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/customers/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customers",
+								"1"
+							]
+						},
+						"description": "Generated from cURL: curl -X PUT \"http://localhost:8081/customers/1\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{\r\n    \"uuid\": \"550e8400-e29b-41d4-a716-446655440000\",\r\n    \"firstName\": \"Juan\",\r\n    \"lastName\": \"Pérez Gómez\",\r\n    \"email\": \"juan.perez@example.com\",\r\n    \"phoneNumber\": \"+573001234567\",\r\n    \"address\": \"Avenida 456 #78-90\",\r\n    \"status\": \"ACTIVE\"\r\n  }'"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "api-ms-financial-movement",
+			"item": [
+				{
+					"name": "accounts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/accounts?page=0&size=10&sort=id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"accounts"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "sort",
+									"value": "id"
+								}
+							]
+						},
+						"description": "Generated from cURL: curl -X GET \"http://localhost:8081/accounts?page=0&size=10&sort=id\" \\\r\n  -H \"Content-Type: application/json\""
+					},
+					"response": []
+				},
+				{
+					"name": "account-by-account-number",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/accounts/123456789",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"accounts",
+								"123456789"
+							]
+						},
+						"description": "Generated from cURL: curl -X GET \"http://localhost:8081/accounts/123456789\" \\\r\n  -H \"Content-Type: application/json\""
+					},
+					"response": []
+				},
+				{
+					"name": "create-account",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountNumber\": \"123456789\",\r\n    \"accountType\": \"SAVINGS\",\r\n    \"initialBalance\": 1000.00,\r\n    \"currencyCode\": \"USD\",\r\n    \"customerId\": \"550e8400-e29b-41d4-a716-446655440000\",\r\n    \"interestRate\": 0.5,\r\n    \"overdraftLimit\": 0\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/accounts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"accounts"
+							]
+						},
+						"description": "Generated from cURL: curl -X POST \"http://localhost:8081/accounts\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{\r\n    \"accountNumber\": \"123456789\",\r\n    \"accountType\": \"SAVINGS\",\r\n    \"initialBalance\": 1000.00,\r\n    \"currencyCode\": \"USD\",\r\n    \"customerId\": \"550e8400-e29b-41d4-a716-446655440000\",\r\n    \"interestRate\": 0.5,\r\n    \"overdraftLimit\": 0\r\n  }'"
+					},
+					"response": []
+				},
+				{
+					"name": "delete-account",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/accounts/123456789",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"accounts",
+								"123456789"
+							]
+						},
+						"description": "Generated from cURL: curl -X DELETE \"http://localhost:8081/accounts/123456789\" \\\r\n  -H \"Content-Type: application/json\""
+					},
+					"response": []
+				},
+				{
+					"name": "register-movement",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"date\": \"2023-06-15T10:30:00\",\r\n    \"type\": \"DEPOSIT\",\r\n    \"amount\": 500.00,\r\n    \"description\": \"Cash in\",\r\n    \"accountId\": \"550e8400-e29b-41d4-a716-446655440000\",\r\n    \"referenceNumber\": \"REF123456\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/movements",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"movements"
+							]
+						},
+						"description": "Generated from cURL: curl -X POST \"http://localhost:8081/movimientos\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{\r\n    \"date\": \"2023-06-15T10:30:00\",\r\n    \"type\": \"DEPOSIT\",\r\n    \"amount\": 500.00,\r\n    \"description\": \"Depósito en efectivo\",\r\n    \"accountId\": \"550e8400-e29b-41d4-a716-446655440000\",\r\n    \"referenceNumber\": \"REF123456\"\r\n  }'"
+					},
+					"response": []
+				},
+				{
+					"name": "get-movements-report-by-date",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/movimientos/cliente/1?fechaInicial=01/01/2023&fechaFin=31/12/2023",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"movimientos",
+								"cliente",
+								"1"
+							],
+							"query": [
+								{
+									"key": "fechaInicial",
+									"value": "01/01/2023"
+								},
+								{
+									"key": "fechaFin",
+									"value": "31/12/2023"
+								}
+							]
+						},
+						"description": "Generated from cURL: curl -X GET \"http://localhost:8081/movimientos/cliente/1?fechaInicial=01/01/2023&fechaFin=31/12/2023\" \\\r\n  -H \"Content-Type: application/json\""
+					},
+					"response": []
+				},
+				{
+					"name": "get-movements-report",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/movimientos/cliente/1?fechaInicial=01/01/2023",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"movimientos",
+								"cliente",
+								"1"
+							],
+							"query": [
+								{
+									"key": "fechaInicial",
+									"value": "01/01/2023"
+								}
+							]
+						},
+						"description": "Generated from cURL: curl -X GET \"http://localhost:8081/movimientos/cliente/1?fechaInicial=01/01/2023\" \\\r\n  -H \"Content-Type: application/json\""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

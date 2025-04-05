@@ -1,0 +1,146 @@
+spring:
+  application:
+    name: api-ms-financial-movement
+
+  datasource:
+    url: jdbc:mysql://${MYSQL_SERVER_IP:localhost}:${MYSQL_SERVER_PORT:3306}/financial_movement
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD:d3v5uch4ll3ng3}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      connection-timeout: 30000
+      minimum-idle: 5
+      maximum-pool-size: 10
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      auto-commit: true
+      pool-name: ClientsHikariCP
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: none
+    generate-ddl: false
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    circuit-breaker:
+      enabled: true
+
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+    connection-timeout: 5000
+    template:
+      retry:
+        enabled: true
+        initial-interval: 1000
+        max-attempts: 3
+        multiplier: 1.5
+
+server:
+  port: 8081
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${random.uuid}
+    lease-renewal-interval-in-seconds: 10
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: ${DISCOVERY_SERVER:http://localhost:8761/eureka}
+    registry-fetch-interval-seconds: 5
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      default:
+        register-health-indicator: true
+        sliding-window-size: 100
+        minimum-number-of-calls: 10
+        permitted-number-of-calls-in-half-open-state: 5
+        automatic-transition-from-open-to-half-open-enabled: true
+        wait-duration-in-open-state: 10s
+        failure-rate-threshold: 50
+        slow-call-rate-threshold: 50
+        slow-call-duration-threshold: 2s
+
+  retry:
+    instances:
+      default:
+        max-attempts: 3
+        wait-duration: 1s
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2
+
+  ratelimiter:
+    instances:
+      default:
+        limit-for-period: 50
+        limit-refresh-period: 1s
+        timeout-duration: 5s
+
+logging:
+  level:
+    root: INFO
+    org:
+      springframework: INFO
+    com:
+      diegogonzalez: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+rabbitmq:
+  queue:
+    name: customers.queue
+    exchange: customers.exchange
+    routing:
+      key: customers.routingKey
+
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    operations-sorter: method
+  api-docs:
+    path: /api-docs
+
+swagger:
+  info:
+    name: ${spring.application.name}
+    description: Customer Identity API
+    version: 1.0
+    contact:
+      name: Diego Gonzalez
+      mail: diego23gonza@hotmail.com
+
+# Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+  health:
+    circuitbreakers:
+      enabled: true
+    ratelimiters:
+      enabled: true
+
+rest:
+  client:
+    service:
+      customer-identity:
+        endpoint: ${CUSTOMER_IDENTITY_ENDPOINT:http://localhost:8081/customers}

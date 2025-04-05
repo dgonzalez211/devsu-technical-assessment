@@ -1,0 +1,119 @@
+spring:
+  application:
+    name: api-ms-entry-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: api-ms-customer-identity
+          uri: lb://api-ms-customer-identity
+          predicates:
+            - Path=/api-ms-customer-identity/**
+          filters:
+            - StripPrefix=1
+        - id: api-ms-financial-movement
+          uri: lb://api-ms-financial-movement
+          predicates:
+            - Path=/api-ms-financial-movement/**
+          filters:
+            - StripPrefix=1
+      httpclient:
+        connect-timeout: 2000
+        response-timeout: 5s
+    loadbalancer:
+      ribbon:
+        enabled: false
+  boot:
+    admin:
+      client:
+        url: ${ADMIN_SERVER_URL:http://localhost:8761/admin}
+        instance:
+          metadata:
+            tags:
+              environment: ${ENVIRONMENT:local}
+  profiles:
+    active: ${ACTIVE_PROFILE:dev}
+
+server:
+  port: 9090
+  tomcat:
+    connection-timeout: 5000
+    max-threads: 200
+    accept-count: 100
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_SERVER:http://localhost:8761/eureka}
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    hostname: ${HOSTNAME:localhost}
+    instance-id: ${spring.application.name}:${random.value}
+    lease-renewal-interval-in-seconds: 30
+
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.gateway: INFO
+    org.springframework.http.server.reactive: INFO
+    org.springframework.web.reactive: INFO
+    reactor.netty: INFO
+    org.springframework.boot.actuate: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/api-gateway.log
+  logback:
+    rollingpolicy:
+      max-file-size: 10MB
+      max-history: 10
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+  info:
+    env:
+      enabled: true
+    build:
+      enabled: true
+    git:
+      enabled: true
+
+# Configuración de resiliencia
+resilience4j:
+  circuitbreaker:
+    instances:
+      default:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 5s
+        failureRateThreshold: 50
+        eventConsumerBufferSize: 10
+  retry:
+    instances:
+      default:
+        maxAttempts: 3
+        waitDuration: 1s
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2
+  ratelimiter:
+    instances:
+      default:
+        limitForPeriod: 10
+        limitRefreshPeriod: 1s
+        timeoutDuration: 3s
