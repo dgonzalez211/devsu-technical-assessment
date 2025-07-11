@@ -1,394 +1,813 @@
 {
 	"info": {
-		"_postman_id": "1abfec90-7878-4548-aa9c-6ae847c0fc02",
+		"_postman_id": "aa51a738-be29-4ab7-a6c3-f5080aab6367",
 		"name": "devsu-technical-challenge",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "43546610",
-		"_collection_link": "https://diegogonzalez-353157.postman.co/workspace/DIego-Gonzalez's-Workspace~b561359f-8072-4455-826b-5451fd6103ac/collection/43546610-1abfec90-7878-4548-aa9c-6ae847c0fc02?action=share&source=collection_link&creator=43546610"
+		"_exporter_id": "44623091",
+		"_collection_link": "https://diego-1576554.postman.co/workspace/Pogo's-Workspace~3cc0e393-8875-45b1-8180-76450364e670/collection/44623091-aa51a738-be29-4ab7-a6c3-f5080aab6367?action=share&source=collection_link&creator=44623091"
 	},
 	"item": [
 		{
-			"name": "api-ms-customer-identity",
+			"name": "devsu-technical-challenge",
 			"item": [
 				{
-					"name": "customers",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8081/customers",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"customers"
-							]
-						},
-						"description": "Generated from cURL: curl -X GET \"http://localhost:8081/customers\" \\\r\n  -H \"Content-Type: application/json\""
-					},
-					"response": []
-				},
-				{
-					"name": "customer-by-id",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8081/customers/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"customers",
-								"1"
-							]
-						},
-						"description": "Generated from cURL: curl -X GET \"http://localhost:8081/customers/1\" \\\r\n  -H \"Content-Type: application/json\""
-					},
-					"response": []
-				},
-				{
-					"name": "create-customer",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"firstName\": \"Juan\",\r\n    \"lastName\": \"Perez\",\r\n    \"email\": \"juan.perez@fmail.com\",\r\n    \"phoneNumber\": \"+573001234567\",\r\n    \"address\": \"Calle 123 #45-67\",\r\n    \"customerId\": \"ABC12345\",\r\n    \"password\": \"password123\"\r\n  }",
-							"options": {
-								"raw": {
-									"language": "json"
+					"name": "api-ms-customer-identity",
+					"item": [
+						{
+							"name": "customers",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('preRequest', function () {",
+											"});"
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('afterResponse', function () {",
+											"});"
+										]
+									}
 								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8081/customers",
-							"protocol": "http",
-							"host": [
-								"localhost"
 							],
-							"port": "8081",
-							"path": [
-								"customers"
-							]
+							"protocolProfileBehavior": {
+								"followRedirects": true,
+								"disableUrlEncoding": false,
+								"disableCookies": false
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:9090/api-ms-customer-identity/customers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api-ms-customer-identity",
+										"customers"
+									]
+								},
+								"description": "Generated from cURL: curl -X GET \"http://localhost:8081/customers\" \\\r\n  -H \"Content-Type: application/json\""
+							},
+							"response": []
 						},
-						"description": "Generated from cURL: curl -X POST \"http://localhost:8081/customers\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{\r\n    \"firstName\": \"Juan\",\r\n    \"lastName\": \"Pérez\",\r\n    \"email\": \"juan.perez@example.com\",\r\n    \"phoneNumber\": \"+573001234567\",\r\n    \"address\": \"Calle 123 #45-67\",\r\n    \"customerId\": \"ABC12345\",\r\n    \"password\": \"password123\"\r\n  }'"
-					},
-					"response": []
-				},
-				{
-					"name": "delete-customer",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8081/customers/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"customers",
-								"1"
-							]
-						},
-						"description": "Generated from cURL: curl -X DELETE \"http://localhost:8081/customers/1\" \\\r\n  -H \"Content-Type: application/json\""
-					},
-					"response": []
-				},
-				{
-					"name": "update-customer",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"uuid\": \"550e8400-e29b-41d4-a716-446655440000\",\r\n    \"firstName\": \"Juan\",\r\n    \"lastName\": \"Perez Gomez\",\r\n    \"email\": \"juan.perez@gmail.com\",\r\n    \"phoneNumber\": \"+573001234567\",\r\n    \"address\": \"Avenida 456 #78-90\",\r\n    \"status\": \"ACTIVE\"\r\n  }",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "customer-by-id",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('preRequest', function () {",
+											"});"
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('afterResponse', function () {",
+											"});"
+										]
+									}
 								}
+							],
+							"protocolProfileBehavior": {
+								"followRedirects": true,
+								"disableUrlEncoding": false,
+								"disableCookies": false
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:9090/api-ms-customer-identity/customers/e5088c3c-5e6f-11f0-bed0-eaa68167a300",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api-ms-customer-identity",
+										"customers",
+										"e5088c3c-5e6f-11f0-bed0-eaa68167a300"
+									]
+								},
+								"description": "Generated from cURL: curl -X GET \"http://localhost:8081/customers/1\" \\\r\n  -H \"Content-Type: application/json\""
+							},
+							"response": []
+						},
+						{
+							"name": "create-customer",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('preRequest', function () {",
+											"});"
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('afterResponse', function () {",
+											"});"
+										]
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"followRedirects": true,
+								"disableUrlEncoding": false,
+								"disableCookies": false
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"firstName\": \"Juan\",\n\t\"lastName\": \"Perez\",\n\t\"email\": \"juan.p3r3l@xmail.com\",\n\t\"phoneNumber\": \"+573001234567\",\n\t\"identification\": \"12345678443\",\n\t\"address\": \"Calle 123 #45-67\",\n\t\"customerId\": \"{% uuid 'v4' %}\",\n\t\"password\": \"password123\",\n\t\"gender\": \"MALE\",\n\t\"customerStatus\": \"ACTIVE\",\n\t\"age\": 34\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9090/api-ms-customer-identity/customers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api-ms-customer-identity",
+										"customers"
+									]
+								},
+								"description": "Generated from cURL: curl -X POST \"http://localhost:8081/customers\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{\r\n    \"firstName\": \"Juan\",\r\n    \"lastName\": \"Pérez\",\r\n    \"email\": \"juan.perez@example.com\",\r\n    \"phoneNumber\": \"+573001234567\",\r\n    \"address\": \"Calle 123 #45-67\",\r\n    \"customerId\": \"ABC12345\",\r\n    \"password\": \"password123\"\r\n  }'"
+							},
+							"response": []
+						},
+						{
+							"name": "delete-customer",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('preRequest', function () {",
+											"});"
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('afterResponse', function () {",
+											"});"
+										]
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"followRedirects": true,
+								"disableUrlEncoding": false,
+								"disableCookies": false
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:9090/api-ms-customer-identity/customers/07fd5b1d-ca31-4122-b843-f5f0fc30ea0d",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api-ms-customer-identity",
+										"customers",
+										"07fd5b1d-ca31-4122-b843-f5f0fc30ea0d"
+									]
+								},
+								"description": "Generated from cURL: curl -X DELETE \"http://localhost:8081/customers/1\" \\\r\n  -H \"Content-Type: application/json\""
+							},
+							"response": []
+						},
+						{
+							"name": "update-customer",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('preRequest', function () {",
+											"});"
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('afterResponse', function () {",
+											"});"
+										]
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"followRedirects": true,
+								"disableUrlEncoding": false,
+								"disableCookies": false
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"uuid\": \"550e8400-e29b-41d4-a716-446655440000\",\n    \"firstName\": \"Juan\",\n    \"lastName\": \"Perez Gomez\",\n    \"email\": \"juan.perez@gmail.com\",\n\t\t\"identification\": \"12345677777\",\n    \"phoneNumber\": \"+573001234567\",\n    \"address\": \"Avenida 456 #78-90\",\n    \"status\": \"ACTIVE\"\n  }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9090/api-ms-customer-identity/customers/e5088c3c-5e6f-11f0-bed0-eaa68167a300",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api-ms-customer-identity",
+										"customers",
+										"e5088c3c-5e6f-11f0-bed0-eaa68167a300"
+									]
+								},
+								"description": "Generated from cURL: curl -X PUT \"http://localhost:8081/customers/1\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{\r\n    \"uuid\": \"550e8400-e29b-41d4-a716-446655440000\",\r\n    \"firstName\": \"Juan\",\r\n    \"lastName\": \"Pérez Gómez\",\r\n    \"email\": \"juan.perez@example.com\",\r\n    \"phoneNumber\": \"+573001234567\",\r\n    \"address\": \"Avenida 456 #78-90\",\r\n    \"status\": \"ACTIVE\"\r\n  }'"
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('preRequest', function () {",
+									"});"
+								]
 							}
 						},
-						"url": {
-							"raw": "http://localhost:8081/customers/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('afterResponse', function () {",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "api-ms-financial-movement",
+					"item": [
+						{
+							"name": "accounts",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('preRequest', function () {",
+											"});"
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('afterResponse', function () {",
+											"});"
+										]
+									}
+								}
 							],
-							"port": "8081",
-							"path": [
-								"customers",
-								"1"
-							]
+							"protocolProfileBehavior": {
+								"followRedirects": true,
+								"disableUrlEncoding": false,
+								"disableCookies": false
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:9090/api-ms-financial-movement/accounts?page=0&size=10&sort=id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api-ms-financial-movement",
+										"accounts"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "10"
+										},
+										{
+											"key": "sort",
+											"value": "id"
+										}
+									]
+								},
+								"description": "Generated from cURL: curl -X GET \"http://localhost:8081/accounts?page=0&size=10&sort=id\" \\\r\n  -H \"Content-Type: application/json\""
+							},
+							"response": []
 						},
-						"description": "Generated from cURL: curl -X PUT \"http://localhost:8081/customers/1\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{\r\n    \"uuid\": \"550e8400-e29b-41d4-a716-446655440000\",\r\n    \"firstName\": \"Juan\",\r\n    \"lastName\": \"Pérez Gómez\",\r\n    \"email\": \"juan.perez@example.com\",\r\n    \"phoneNumber\": \"+573001234567\",\r\n    \"address\": \"Avenida 456 #78-90\",\r\n    \"status\": \"ACTIVE\"\r\n  }'"
-					},
-					"response": []
+						{
+							"name": "account-by-account-number",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('preRequest', function () {",
+											"});"
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('afterResponse', function () {",
+											"});"
+										]
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"followRedirects": true,
+								"disableUrlEncoding": false,
+								"disableCookies": false
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:9090/api-ms-financial-movement/accounts/1000100010001",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api-ms-financial-movement",
+										"accounts",
+										"1000100010001"
+									]
+								},
+								"description": "Generated from cURL: curl -X GET \"http://localhost:8081/accounts/123456789\" \\\r\n  -H \"Content-Type: application/json\""
+							},
+							"response": []
+						},
+						{
+							"name": "create-account",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('preRequest', function () {",
+											"});"
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('afterResponse', function () {",
+											"});"
+										]
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"followRedirects": true,
+								"disableUrlEncoding": false,
+								"disableCookies": false
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"accountNumber\": \"1000100010033\",\n\t\"accountType\": \"SAVINGS\",\n\t\"initialBalance\": 1000.00,\n\t\"currencyCode\": \"USD\",\n\t\"customerId\": \"e5088c3c-5e6f-11f0-bed0-eaa68167a300\",\n\t\"interestRate\": 0.5,\n\t\"overdraftLimit\": 0\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9090/api-ms-financial-movement/accounts",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api-ms-financial-movement",
+										"accounts"
+									]
+								},
+								"description": "Generated from cURL: curl -X POST \"http://localhost:8081/accounts\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{\r\n    \"accountNumber\": \"123456789\",\r\n    \"accountType\": \"SAVINGS\",\r\n    \"initialBalance\": 1000.00,\r\n    \"currencyCode\": \"USD\",\r\n    \"customerId\": \"550e8400-e29b-41d4-a716-446655440000\",\r\n    \"interestRate\": 0.5,\r\n    \"overdraftLimit\": 0\r\n  }'"
+							},
+							"response": []
+						},
+						{
+							"name": "delete-account",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('preRequest', function () {",
+											"});"
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('afterResponse', function () {",
+											"});"
+										]
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"followRedirects": true,
+								"disableUrlEncoding": false,
+								"disableCookies": false
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:9090/api-ms-financial-movement/accounts/1000100010033",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api-ms-financial-movement",
+										"accounts",
+										"1000100010033"
+									]
+								},
+								"description": "Generated from cURL: curl -X DELETE \"http://localhost:8081/accounts/123456789\" \\\r\n  -H \"Content-Type: application/json\""
+							},
+							"response": []
+						},
+						{
+							"name": "register-movement",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('preRequest', function () {",
+											"});"
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('afterResponse', function () {",
+											"});"
+										]
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"followRedirects": true,
+								"disableUrlEncoding": false,
+								"disableCookies": false
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"date\": \"2025-07-11T10:30:00\",\n    \"type\": \"DEPOSIT\",\n    \"amount\": 500.00,\n    \"description\": \"Cash in\",\n    \"accountId\": \"e54e5b7e-5e6f-11f0-bed0-eaa68167a300\",\n    \"referenceNumber\": \"REF123456\"\n  }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9090/api-ms-financial-movement/movements",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api-ms-financial-movement",
+										"movements"
+									]
+								},
+								"description": "Generated from cURL: curl -X POST \"http://localhost:8081/movimientos\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{\r\n    \"date\": \"2023-06-15T10:30:00\",\r\n    \"type\": \"DEPOSIT\",\r\n    \"amount\": 500.00,\r\n    \"description\": \"Depósito en efectivo\",\r\n    \"accountId\": \"550e8400-e29b-41d4-a716-446655440000\",\r\n    \"referenceNumber\": \"REF123456\"\r\n  }'"
+							},
+							"response": []
+						},
+						{
+							"name": "get-movements-report-by-date",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('preRequest', function () {",
+											"});"
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('afterResponse', function () {",
+											"});"
+										]
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"followRedirects": true,
+								"disableUrlEncoding": false,
+								"disableCookies": false
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:9090/api-ms-financial-movement/movements/customer/:customerId?startDate=01-06-2025&endDate=30-06-2025",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api-ms-financial-movement",
+										"movements",
+										"customer",
+										":customerId"
+									],
+									"query": [
+										{
+											"key": "startDate",
+											"value": "01-06-2025"
+										},
+										{
+											"key": "endDate",
+											"value": "30-06-2025"
+										}
+									],
+									"variable": [
+										{
+											"key": "customerId",
+											"value": "e5248adb-5e6f-11f0-bed0-eaa68167a300"
+										}
+									]
+								},
+								"description": "Generated from cURL: curl -X GET \"http://localhost:8081/movimientos/cliente/1?fechaInicial=01/01/2023&fechaFin=31/12/2023\" \\\r\n  -H \"Content-Type: application/json\""
+							},
+							"response": []
+						},
+						{
+							"name": "get-movements-report",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('preRequest', function () {",
+											"});"
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('afterResponse', function () {",
+											"});"
+										]
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"followRedirects": true,
+								"disableUrlEncoding": false,
+								"disableCookies": false
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:9090/api-ms-financial-movement/movements/customer/:customerId?=",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api-ms-financial-movement",
+										"movements",
+										"customer",
+										":customerId"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": ""
+										}
+									],
+									"variable": [
+										{
+											"key": "customerId",
+											"value": "e5248adb-5e6f-11f0-bed0-eaa68167a300"
+										}
+									]
+								},
+								"description": "Generated from cURL: curl -X GET \"http://localhost:8081/movimientos/cliente/1?fechaInicial=01/01/2023\" \\\r\n  -H \"Content-Type: application/json\""
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('preRequest', function () {",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('afterResponse', function () {",
+									"});"
+								]
+							}
+						}
+					]
 				}
-			]
-		},
-		{
-			"name": "api-ms-financial-movement",
-			"item": [
+			],
+			"event": [
 				{
-					"name": "accounts",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8081/accounts?page=0&size=10&sort=id",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"accounts"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "0"
-								},
-								{
-									"key": "size",
-									"value": "10"
-								},
-								{
-									"key": "sort",
-									"value": "id"
-								}
-							]
-						},
-						"description": "Generated from cURL: curl -X GET \"http://localhost:8081/accounts?page=0&size=10&sort=id\" \\\r\n  -H \"Content-Type: application/json\""
-					},
-					"response": []
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('preRequest', function () {",
+							"});"
+						]
+					}
 				},
 				{
-					"name": "account-by-account-number",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8081/accounts/123456789",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"accounts",
-								"123456789"
-							]
-						},
-						"description": "Generated from cURL: curl -X GET \"http://localhost:8081/accounts/123456789\" \\\r\n  -H \"Content-Type: application/json\""
-					},
-					"response": []
-				},
-				{
-					"name": "create-account",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"accountNumber\": \"123456789\",\r\n    \"accountType\": \"SAVINGS\",\r\n    \"initialBalance\": 1000.00,\r\n    \"currencyCode\": \"USD\",\r\n    \"customerId\": \"550e8400-e29b-41d4-a716-446655440000\",\r\n    \"interestRate\": 0.5,\r\n    \"overdraftLimit\": 0\r\n  }",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8081/accounts",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"accounts"
-							]
-						},
-						"description": "Generated from cURL: curl -X POST \"http://localhost:8081/accounts\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{\r\n    \"accountNumber\": \"123456789\",\r\n    \"accountType\": \"SAVINGS\",\r\n    \"initialBalance\": 1000.00,\r\n    \"currencyCode\": \"USD\",\r\n    \"customerId\": \"550e8400-e29b-41d4-a716-446655440000\",\r\n    \"interestRate\": 0.5,\r\n    \"overdraftLimit\": 0\r\n  }'"
-					},
-					"response": []
-				},
-				{
-					"name": "delete-account",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8081/accounts/123456789",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"accounts",
-								"123456789"
-							]
-						},
-						"description": "Generated from cURL: curl -X DELETE \"http://localhost:8081/accounts/123456789\" \\\r\n  -H \"Content-Type: application/json\""
-					},
-					"response": []
-				},
-				{
-					"name": "register-movement",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"date\": \"2023-06-15T10:30:00\",\r\n    \"type\": \"DEPOSIT\",\r\n    \"amount\": 500.00,\r\n    \"description\": \"Cash in\",\r\n    \"accountId\": \"550e8400-e29b-41d4-a716-446655440000\",\r\n    \"referenceNumber\": \"REF123456\"\r\n  }",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8081/movements",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"movements"
-							]
-						},
-						"description": "Generated from cURL: curl -X POST \"http://localhost:8081/movimientos\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{\r\n    \"date\": \"2023-06-15T10:30:00\",\r\n    \"type\": \"DEPOSIT\",\r\n    \"amount\": 500.00,\r\n    \"description\": \"Depósito en efectivo\",\r\n    \"accountId\": \"550e8400-e29b-41d4-a716-446655440000\",\r\n    \"referenceNumber\": \"REF123456\"\r\n  }'"
-					},
-					"response": []
-				},
-				{
-					"name": "get-movements-report-by-date",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8081/movimientos/cliente/1?fechaInicial=01/01/2023&fechaFin=31/12/2023",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"movimientos",
-								"cliente",
-								"1"
-							],
-							"query": [
-								{
-									"key": "fechaInicial",
-									"value": "01/01/2023"
-								},
-								{
-									"key": "fechaFin",
-									"value": "31/12/2023"
-								}
-							]
-						},
-						"description": "Generated from cURL: curl -X GET \"http://localhost:8081/movimientos/cliente/1?fechaInicial=01/01/2023&fechaFin=31/12/2023\" \\\r\n  -H \"Content-Type: application/json\""
-					},
-					"response": []
-				},
-				{
-					"name": "get-movements-report",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8081/movimientos/cliente/1?fechaInicial=01/01/2023",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"movimientos",
-								"cliente",
-								"1"
-							],
-							"query": [
-								{
-									"key": "fechaInicial",
-									"value": "01/01/2023"
-								}
-							]
-						},
-						"description": "Generated from cURL: curl -X GET \"http://localhost:8081/movimientos/cliente/1?fechaInicial=01/01/2023\" \\\r\n  -H \"Content-Type: application/json\""
-					},
-					"response": []
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('afterResponse', function () {",
+							"});"
+						]
+					}
 				}
 			]
 		}

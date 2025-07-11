@@ -1,0 +1,533 @@
+type: collection.insomnia.rest/5.0
+name: devsu-technical-challenge
+meta:
+  id: wrk_147b466ec043412a97b86cb88445970f
+  created: 1752182464865
+  modified: 1752182464865
+  description: ""
+collection:
+  - name: devsu-technical-challenge
+    meta:
+      id: fld_25bb5a9862b84f8a92d5047f812598ba
+      created: 1752182464871
+      modified: 1752182464871
+      sortKey: -1752182463333
+      description: ""
+    children:
+      - name: api-ms-customer-identity
+        meta:
+          id: fld_d3049a0e5c3a44e683febc69204b4f02
+          created: 1752182464874
+          modified: 1752182464874
+          sortKey: -1752182463332
+          description: ""
+        children:
+          - url: http://localhost:9090/api-ms-customer-identity/customers
+            name: customers
+            meta:
+              id: req_e06c95469288439a89e4ca6b0aeac29c
+              created: 1752182464878
+              modified: 1752182882941
+              isPrivate: false
+              description: "Generated from cURL: curl -X GET
+                \"http://localhost:8081/customers\" \\\r
+
+                \  -H \"Content-Type: application/json\""
+              sortKey: -1752182463331
+            method: GET
+            headers:
+              - name: Content-Type
+                value: application/json
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:9090/api-ms-customer-identity/customers/e5088c3c-5e6f-11f0-bed0-eaa68167a300
+            name: customer-by-id
+            meta:
+              id: req_c855e42ee8474d189e61376bc02699ea
+              created: 1752182464883
+              modified: 1752250737348
+              isPrivate: false
+              description: "Generated from cURL: curl -X GET
+                \"http://localhost:8081/customers/1\" \\\r
+
+                \  -H \"Content-Type: application/json\""
+              sortKey: -1752182463330
+            method: GET
+            headers:
+              - name: Content-Type
+                value: application/json
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:9090/api-ms-customer-identity/customers
+            name: create-customer
+            meta:
+              id: req_2e5c6f2cb8da4029b14b6d635d5c55af
+              created: 1752182464887
+              modified: 1752191326047
+              isPrivate: false
+              description: "Generated from cURL: curl -X POST
+                \"http://localhost:8081/customers\" \\\r
+
+                \  -H \"Content-Type: application/json\" \\\r
+
+                \  -d '{\r
+
+                \    \"firstName\": \"Juan\",\r
+
+                \    \"lastName\": \"Pérez\",\r
+
+                \    \"email\": \"juan.perez@example.com\",\r
+
+                \    \"phoneNumber\": \"+573001234567\",\r
+
+                \    \"address\": \"Calle 123 #45-67\",\r
+
+                \    \"customerId\": \"ABC12345\",\r
+
+                \    \"password\": \"password123\"\r
+
+                \  }'"
+              sortKey: -1752182463329
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"firstName": "Juan",
+                	"lastName": "Perez",
+                	"email": "juan.p3r3l@xmail.com",
+                	"phoneNumber": "+573001234567",
+                	"identification": "12345678443",
+                	"address": "Calle 123 #45-67",
+                	"customerId": "{% uuid 'v4' %}",
+                	"password": "password123",
+                	"gender": "MALE",
+                	"customerStatus": "ACTIVE",
+                	"age": 34
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:9090/api-ms-customer-identity/customers/07fd5b1d-ca31-4122-b843-f5f0fc30ea0d
+            name: delete-customer
+            meta:
+              id: req_a77d33ace8d34a25a4d80ba8af270ca3
+              created: 1752182464890
+              modified: 1752250787003
+              isPrivate: false
+              description: "Generated from cURL: curl -X DELETE
+                \"http://localhost:8081/customers/1\" \\\r
+
+                \  -H \"Content-Type: application/json\""
+              sortKey: -1752182463328
+            method: DELETE
+            headers:
+              - name: Content-Type
+                value: application/json
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:9090/api-ms-customer-identity/customers/e5088c3c-5e6f-11f0-bed0-eaa68167a300
+            name: update-customer
+            meta:
+              id: req_4c4953b76a7742538b2cb2f2004db2d2
+              created: 1752182464894
+              modified: 1752250805585
+              isPrivate: false
+              description: "Generated from cURL: curl -X PUT
+                \"http://localhost:8081/customers/1\" \\\r
+
+                \  -H \"Content-Type: application/json\" \\\r
+
+                \  -d '{\r
+
+                \    \"uuid\": \"550e8400-e29b-41d4-a716-446655440000\",\r
+
+                \    \"firstName\": \"Juan\",\r
+
+                \    \"lastName\": \"Pérez Gómez\",\r
+
+                \    \"email\": \"juan.perez@example.com\",\r
+
+                \    \"phoneNumber\": \"+573001234567\",\r
+
+                \    \"address\": \"Avenida 456 #78-90\",\r
+
+                \    \"status\": \"ACTIVE\"\r
+
+                \  }'"
+              sortKey: -1752182463327
+            method: PUT
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                    "uuid": "550e8400-e29b-41d4-a716-446655440000",
+                    "firstName": "Juan",
+                    "lastName": "Perez Gomez",
+                    "email": "juan.perez@gmail.com",
+                		"identification": "12345677777",
+                    "phoneNumber": "+573001234567",
+                    "address": "Avenida 456 #78-90",
+                    "status": "ACTIVE"
+                  }
+            headers:
+              - name: Content-Type
+                value: application/json
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+        scripts:
+          afterResponse: ""
+          preRequest: ""
+      - name: api-ms-financial-movement
+        meta:
+          id: fld_a7572591e2a34ea9ab89ec81ad9dc38d
+          created: 1752182464897
+          modified: 1752182464897
+          sortKey: -1752182463326
+          description: ""
+        children:
+          - url: http://localhost:9090/api-ms-financial-movement/accounts
+            name: accounts
+            meta:
+              id: req_69900eed6f774deb974cfa6c48ca99dc
+              created: 1752182464900
+              modified: 1752192223671
+              isPrivate: false
+              description: "Generated from cURL: curl -X GET
+                \"http://localhost:8081/accounts?page=0&size=10&sort=id\" \\\r
+
+                \  -H \"Content-Type: application/json\""
+              sortKey: -1752182463325
+            method: GET
+            parameters:
+              - name: page
+                value: "0"
+                disabled: false
+              - name: size
+                value: "10"
+                disabled: false
+              - name: sort
+                value: id
+                disabled: false
+            headers:
+              - name: Content-Type
+                value: application/json
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:9090/api-ms-financial-movement/accounts/1000100010001
+            name: account-by-account-number
+            meta:
+              id: req_95b3ed3989d44d50ad71b19bac5a19ad
+              created: 1752182464903
+              modified: 1752250754355
+              isPrivate: false
+              description: "Generated from cURL: curl -X GET
+                \"http://localhost:8081/accounts/123456789\" \\\r
+
+                \  -H \"Content-Type: application/json\""
+              sortKey: -1752182463324
+            method: GET
+            headers:
+              - name: Content-Type
+                value: application/json
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:9090/api-ms-financial-movement/accounts
+            name: create-account
+            meta:
+              id: req_b94e0f6d1e2049cd81f58dd6f0b94853
+              created: 1752182464906
+              modified: 1752250858023
+              isPrivate: false
+              description: "Generated from cURL: curl -X POST
+                \"http://localhost:8081/accounts\" \\\r
+
+                \  -H \"Content-Type: application/json\" \\\r
+
+                \  -d '{\r
+
+                \    \"accountNumber\": \"123456789\",\r
+
+                \    \"accountType\": \"SAVINGS\",\r
+
+                \    \"initialBalance\": 1000.00,\r
+
+                \    \"currencyCode\": \"USD\",\r
+
+                \    \"customerId\": \"550e8400-e29b-41d4-a716-446655440000\",\r
+
+                \    \"interestRate\": 0.5,\r
+
+                \    \"overdraftLimit\": 0\r
+
+                \  }'"
+              sortKey: -1752182463323
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"accountNumber": "1000100010033",
+                	"accountType": "SAVINGS",
+                	"initialBalance": 1000.00,
+                	"currencyCode": "USD",
+                	"customerId": "e5088c3c-5e6f-11f0-bed0-eaa68167a300",
+                	"interestRate": 0.5,
+                	"overdraftLimit": 0
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:9090/api-ms-financial-movement/accounts/1000100010033
+            name: delete-account
+            meta:
+              id: req_e75b8805518c4be3b81537f2e019d56d
+              created: 1752182464909
+              modified: 1752250869180
+              isPrivate: false
+              description: "Generated from cURL: curl -X DELETE
+                \"http://localhost:8081/accounts/123456789\" \\\r
+
+                \  -H \"Content-Type: application/json\""
+              sortKey: -1752182463322
+            method: DELETE
+            headers:
+              - name: Content-Type
+                value: application/json
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:9090/api-ms-financial-movement/movements
+            name: register-movement
+            meta:
+              id: req_40e231233f3a493ca786e5a4058dffb4
+              created: 1752182464913
+              modified: 1752250900905
+              isPrivate: false
+              description: "Generated from cURL: curl -X POST
+                \"http://localhost:8081/movimientos\" \\\r
+
+                \  -H \"Content-Type: application/json\" \\\r
+
+                \  -d '{\r
+
+                \    \"date\": \"2023-06-15T10:30:00\",\r
+
+                \    \"type\": \"DEPOSIT\",\r
+
+                \    \"amount\": 500.00,\r
+
+                \    \"description\": \"Depósito en efectivo\",\r
+
+                \    \"accountId\": \"550e8400-e29b-41d4-a716-446655440000\",\r
+
+                \    \"referenceNumber\": \"REF123456\"\r
+
+                \  }'"
+              sortKey: -1752182463321
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                    "date": "2025-07-11T10:30:00",
+                    "type": "DEPOSIT",
+                    "amount": 500.00,
+                    "description": "Cash in",
+                    "accountId": "e54e5b7e-5e6f-11f0-bed0-eaa68167a300",
+                    "referenceNumber": "REF123456"
+                  }
+            headers:
+              - name: Content-Type
+                value: application/json
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:9090/api-ms-financial-movement/movements/customer/:customerId
+            name: get-movements-report-by-date
+            meta:
+              id: req_f3feb29164264dbe8d36572bb328bb04
+              created: 1752182464917
+              modified: 1752249694366
+              isPrivate: false
+              description: "Generated from cURL: curl -X GET
+                \"http://localhost:8081/movimientos/cliente/1?fechaInicial=01/0\
+                1/2023&fechaFin=31/12/2023\" \\\r
+
+                \  -H \"Content-Type: application/json\""
+              sortKey: -1752182463320
+            method: GET
+            parameters:
+              - name: startDate
+                value: 01-06-2025
+                disabled: false
+                id: pair_be3982cb2be24b7fbb97df37d11ec3c9
+              - name: endDate
+                value: 30-06-2025
+                disabled: false
+                id: pair_6b3d2a3a2d94456eb42b7c0a39ab90c6
+            headers:
+              - name: Content-Type
+                value: application/json
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+            pathParameters:
+              - name: customerId
+                value: e5248adb-5e6f-11f0-bed0-eaa68167a300
+          - url: http://localhost:9090/api-ms-financial-movement/movements/customer/:customerId
+            name: get-movements-report
+            meta:
+              id: req_df8de1a85a6d46d7a310b27202711e80
+              created: 1752182464920
+              modified: 1752249707424
+              isPrivate: false
+              description: "Generated from cURL: curl -X GET
+                \"http://localhost:8081/movimientos/cliente/1?fechaInicial=01/0\
+                1/2023\" \\\r
+
+                \  -H \"Content-Type: application/json\""
+              sortKey: -1752182463319
+            method: GET
+            parameters:
+              - id: pair_dd42bb035a0a4e8281672fccbc5c9ff6
+                name: ""
+                value: ""
+                description: ""
+                disabled: false
+            headers:
+              - name: Content-Type
+                value: application/json
+            scripts:
+              preRequest: ""
+              afterResponse: ""
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+            pathParameters:
+              - name: customerId
+                value: e5248adb-5e6f-11f0-bed0-eaa68167a300
+        scripts:
+          afterResponse: ""
+          preRequest: ""
+    scripts:
+      afterResponse: ""
+      preRequest: ""
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_4099eac3c7994cb7766493f47f7ea9cfaef63eda
+    created: 1752182467077
+    modified: 1752182467077
+environments:
+  name: Base Environment
+  meta:
+    id: env_4099eac3c7994cb7766493f47f7ea9cfaef63eda
+    created: 1752182467073
+    modified: 1752182467073
+    isPrivate: false
