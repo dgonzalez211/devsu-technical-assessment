@@ -11,6 +11,7 @@ import com.diegogonzalez.devsu.repository.AccountRepository;
 import com.diegogonzalez.devsu.service.AccountService;
 import com.diegogonzalez.devsu.service.CustomerService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -33,6 +35,7 @@ import java.util.UUID;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AccountServiceImpl implements AccountService {
 
     private final AccountRepository accountRepository;
@@ -42,7 +45,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional(readOnly = true)
     public Page<AccountDTO> listAccounts(Pageable pageable) {
-        return accountRepository.findAllAccounts(pageable)
+        return accountRepository.findAll(pageable)
                 .map(AccountMapper.INSTANCE::toDto);
     }
 
@@ -61,9 +64,21 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account findAccountById(UUID accountId) {
+        log.info("Finding account by UUID: {}", accountId);
         Optional<Account> account = accountRepository.findByUuid(accountId);
 
         if (account.isEmpty()) {
+            log.info("Account not found by exact UUID, trying with UUID prefix");
+            String uuidPrefix = accountId.toString().substring(0, 8);
+            List<Account> accounts = accountRepository.findByUuidStartingWith(uuidPrefix);
+
+            if (!accounts.isEmpty()) {
+                Account foundAccount = accounts.get(0);
+                log.info("Found account with similar UUID: {}", foundAccount.getUuid());
+                return foundAccount;
+            }
+
+            log.error("Account not found with UUID: {} or prefix: {}", accountId, uuidPrefix);
             throw new MicroserviceException(ApplicationResponse.ACCOUNT_NOT_FOUND, HttpStatus.NOT_FOUND.value());
         }
 

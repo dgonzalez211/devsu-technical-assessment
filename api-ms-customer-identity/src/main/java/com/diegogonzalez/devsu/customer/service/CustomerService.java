@@ -22,14 +22,14 @@ public interface CustomerService {
     List<CustomerDTO> findCustomers();
 
 
-    CustomerDTO findCustomerById(Long clienteId);
+    CustomerDTO findCustomerById(String customerId);
 
 
     CustomerDTO createCustomer(CustomerCreateRequestDTO customerRequestDTO);
 
 
-    CustomerDTO updateCustomer(Long clienteId, CustomerUpdateRequestDTO customerRequestDTO);
+    CustomerDTO updateCustomer(String customerId, CustomerUpdateRequestDTO customerRequestDTO);
 
 
-    void removeCustomer(Long clienteId);
+    void removeCustomer(String customerId);
 }

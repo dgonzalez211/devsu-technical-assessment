@@ -53,7 +53,6 @@ public class Person implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @UuidGenerator
     @Column(name = "uuid", updatable = false, nullable = false, unique = true)
     private UUID uuid;
 
@@ -83,7 +82,7 @@ public class Person implements Serializable {
     private Integer age;
 
     @Past(message = "Birth date must be in the past")
-    @Column(name = "birthDate")
+    @Column(name = "birthDate", columnDefinition = "DATE")
     private LocalDate birthDate;
 
     @Size(max = 255, message = "Address must not exceed 255 characters")
@@ -127,6 +126,9 @@ public class Person implements Serializable {
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
+        if (uuid == null) {
+            uuid = UUID.randomUUID();
+        }
         if (createdBy == null) {
             createdBy = "SYSTEM";
         }

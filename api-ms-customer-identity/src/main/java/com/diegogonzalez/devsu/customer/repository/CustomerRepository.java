@@ -1,8 +1,13 @@
 package com.diegogonzalez.devsu.customer.repository;
 
 import com.diegogonzalez.devsu.entity.Customer;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+import java.util.UUID;
 
 /*
  * Author: Diego González
@@ -15,5 +20,7 @@ import org.springframework.stereotype.Repository;
  * or fitness for a particular purpose.
  */
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer, Long> {
+public interface CustomerRepository extends JpaRepository<Customer, String> {
+    Optional<Customer> findByCustomerId(@NotBlank(message = "Customer ID is required") @Pattern(regexp = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$", message = "Invalid customer ID format") String customerId);
+    Optional<Customer> findByUuid(UUID uuid);
 }

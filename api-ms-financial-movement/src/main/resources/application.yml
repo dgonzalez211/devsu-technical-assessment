@@ -26,6 +26,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        physical_naming_strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     open-in-view: false
 
   cloud:
@@ -49,7 +50,7 @@ spring:
         multiplier: 1.5
 
 server:
-  port: 8081
+  port: 8082
 
 eureka:
   instance:

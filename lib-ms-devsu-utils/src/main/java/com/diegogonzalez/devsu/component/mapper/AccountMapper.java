@@ -44,10 +44,10 @@ public interface AccountMapper {
     @Mapping(target = "closedAt", ignore = true)
     Account toEntity(AccountCreateRequestDTO dto);
 
-    @Mapping(target = "customerId", source = "customer.uuid")
+    @Mapping(target = "customerId", source = "customer.customerId")
     AccountDTO toDto(Account entity);
 
-    @Mapping(target = "customerId", source = "customer.uuid")
+    @Mapping(target = "customerId", source = "customer.customerId")
     @Mapping(target = "customerFirstName", source = "customer.firstName")
     @Mapping(target = "customerLastName", source = "customer.lastName")
     AccountResponseDTO toResponseDto(Account entity);
@@ -71,12 +71,12 @@ public interface AccountMapper {
 
 
     @Named("customerIdToCustomer")
-    default Customer customerIdToCustomer(UUID customerId) {
+    default Customer customerIdToCustomer(String customerId) {
         if (customerId == null) {
             return null;
         }
         Customer customer = new Customer();
-        customer.setUuid(customerId);
+        customer.setCustomerId(customerId);
         return customer;
     }
 

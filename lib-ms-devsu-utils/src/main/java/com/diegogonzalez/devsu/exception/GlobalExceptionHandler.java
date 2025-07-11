@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -28,39 +27,6 @@ import java.util.Arrays;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Object> handleMethodArgumentNotValid(
-            MethodArgumentNotValidException ex,
-            HttpStatus status) {
-
-        return createErrorResponse(ex, ApplicationResponse.INVALID_ARGS, status);
-    }
-
-    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public ResponseEntity<Object> handleHttpRequestMethodNotSupported(
-            HttpRequestMethodNotSupportedException ex,
-            HttpStatus status) {
-
-        log.warn("Unsupported HTTP method: {}", ex.getMessage());
-        return createErrorResponse(ex, ApplicationResponse.NOT_ALLOWED, status);
-    }
-
-    @ExceptionHandler(ServletRequestBindingException.class)
-    public ResponseEntity<Object> handleServletRequestBindingException(
-            ServletRequestBindingException ex,
-            HttpStatus status) {
-
-        return createErrorResponse(ex, ApplicationResponse.NOT_ALLOWED, status);
-    }
-
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<Object> handleHttpMessageNotReadable(
-            HttpMessageNotReadableException ex,
-            HttpStatus status) {
-
-        return createErrorResponse(ex, ApplicationResponse.INVALID_BODY, status);
-    }
 
     @ExceptionHandler(MicroserviceException.class)
     public ResponseEntity<Object> handleMicroserviceException(

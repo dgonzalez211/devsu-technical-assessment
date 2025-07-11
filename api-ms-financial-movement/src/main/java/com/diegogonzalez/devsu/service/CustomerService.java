@@ -18,8 +18,8 @@ import java.util.UUID;
 public interface CustomerService {
 
     @Transactional(readOnly = true)
-    Customer findCustomer(UUID customerId);
+    Customer findCustomer(String customerId);
 
-    Customer retrieveExternalCustomer(UUID customerId);
+    Customer retrieveExternalCustomer(String customerId);
 
 }

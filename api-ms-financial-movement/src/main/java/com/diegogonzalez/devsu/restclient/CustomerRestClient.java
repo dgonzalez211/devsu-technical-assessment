@@ -4,6 +4,7 @@ import com.diegogonzalez.devsu.dto.CustomerDTO;
 import com.diegogonzalez.devsu.dto.response.IntegrationResponse;
 import com.diegogonzalez.devsu.exception.ApplicationResponse;
 import com.diegogonzalez.devsu.exception.MicroserviceException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +29,7 @@ import org.springframework.web.client.RestClientException;
 public class CustomerRestClient {
 
     private final RestClient restClient;
+    private final ObjectMapper objectMapper;
     @Value("${rest.client.service.customer-identity.endpoint}")
     private String customerIdentityEndpoint;
 
@@ -55,7 +57,13 @@ public class CustomerRestClient {
                 throw new MicroserviceException(ApplicationResponse.REST_CLIENT);
             }
 
-            return (CustomerDTO) response.getData();
+            try {
+                // Convert the LinkedHashMap to CustomerDTO using ObjectMapper
+                return objectMapper.convertValue(response.getData(), CustomerDTO.class);
+            } catch (Exception e) {
+                log.error("Error converting response data to CustomerDTO for customer {}: {}", customerId, e.getMessage());
+                throw new MicroserviceException(ApplicationResponse.REST_CLIENT, e);
+            }
 
         } catch (RestClientException exc) {
             throw new MicroserviceException(ApplicationResponse.REST_CLIENT, exc);

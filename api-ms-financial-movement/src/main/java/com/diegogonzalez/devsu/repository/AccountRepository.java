@@ -2,9 +2,9 @@ package com.diegogonzalez.devsu.repository;
 
 import com.diegogonzalez.devsu.entity.Account;
 import com.diegogonzalez.devsu.entity.Customer;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,11 +24,12 @@ import java.util.UUID;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
-    Optional<Account> findByAccountNumber(String numeroCuenta);
+    Optional<Account> findByAccountNumber(String accountNumber);
 
     List<Account> findByCustomer(Customer customer);
 
     Optional<Account> findByUuid(UUID uuid);
 
-    Page<Account> findAllAccounts(Pageable pageable);
+    @Query("SELECT a FROM Account a WHERE CAST(a.uuid AS string) LIKE CONCAT(:uuidPrefix, '%')")
+    List<Account> findByUuidStartingWith(@Param("uuidPrefix") String uuidPrefix);
 }

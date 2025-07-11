@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-import java.util.UUID;
 
 /*
  * Author: Diego González
@@ -20,9 +19,9 @@ import java.util.UUID;
  * or fitness for a particular purpose.
  */
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer, Long> {
+public interface CustomerRepository extends JpaRepository<Customer, String> {
 
-    Optional<Customer> findCustomerByUuid(UUID uuid);
+    Optional<Customer> findCustomerByCustomerId(@NotBlank(message = "Customer ID is required") @Pattern(regexp = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$", message = "Invalid customer ID format") String uuid);
 
-    Optional<Customer> findCustomerByCustomerId(@NotBlank(message = "Customer ID is required") @Pattern(regexp = "^[A-Z0-9]{5,15}$", message = "Invalid customer ID format") String customerId);
+    Optional<Customer> findCustomerByIdentification(String identification);
 }

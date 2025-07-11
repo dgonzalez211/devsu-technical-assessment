@@ -56,7 +56,7 @@ public class CustomerServiceTest {
         testCustomer = new Customer();
         testCustomer.setId(1L);
         testCustomer.setUuid(UUID.randomUUID());
-        testCustomer.setCustomerId(UUID.randomUUID());
+        testCustomer.setCustomerId(UUID.randomUUID().toString());
         testCustomer.setFirstName("John");
         testCustomer.setLastName("Doe");
         testCustomer.setIdentification("1234567890");
@@ -78,6 +78,11 @@ public class CustomerServiceTest {
         createRequestDTO.setEmail("jane.smith@example.com");
         createRequestDTO.setPassword("password456");
         createRequestDTO.setAddress("123 Main St");
+        createRequestDTO.setCustomerId(UUID.randomUUID().toString());
+        createRequestDTO.setIdentification("ABCDE12345");
+        createRequestDTO.setGender(Person.Gender.FEMALE);
+        createRequestDTO.setAge(25);
+        createRequestDTO.setCustomerStatus(Customer.CustomerStatus.ACTIVE);
 
         updateRequestDTO = new CustomerUpdateRequestDTO();
         updateRequestDTO.setFirstName("John");
@@ -119,27 +124,27 @@ public class CustomerServiceTest {
     @DisplayName("Should find customer by ID successfully")
     void findCustomerById_ShouldReturnCustomer() {
 
-        when(customerRepository.findById(anyLong())).thenReturn(Optional.of(testCustomer));
+        when(customerRepository.findByCustomerId(anyString())).thenReturn(Optional.of(testCustomer));
 
 
-        CustomerDTO result = customerService.findCustomerById(1L);
+        CustomerDTO result = customerService.findCustomerById(UUID.randomUUID().toString());
 
 
         assertNotNull(result);
         assertEquals(testCustomerDTO.getFirstName(), result.getFirstName());
         assertEquals(testCustomerDTO.getLastName(), result.getLastName());
-        verify(customerRepository, times(1)).findById(anyLong());
+        verify(customerRepository, times(1)).findByCustomerId(anyString());
     }
 
     @Test
     @DisplayName("Should throw exception when customer not found by ID")
     void findCustomerById_ShouldThrowExceptionWhenCustomerNotFound() {
 
-        when(customerRepository.findById(anyLong())).thenReturn(Optional.empty());
+        when(customerRepository.findByCustomerId(anyString())).thenReturn(Optional.empty());
 
 
-        assertThrows(MicroserviceException.class, () -> customerService.findCustomerById(1L));
-        verify(customerRepository, times(1)).findById(anyLong());
+        assertThrows(MicroserviceException.class, () -> customerService.findCustomerById(UUID.randomUUID().toString()));
+        verify(customerRepository, times(1)).findByCustomerId(anyString());
     }
 
     @Test
@@ -149,7 +154,7 @@ public class CustomerServiceTest {
         Customer newCustomer = CustomerMapper.INSTANCE.toEntity(createRequestDTO);
         newCustomer.setId(2L);
         newCustomer.setUuid(UUID.randomUUID());
-        newCustomer.setCustomerId(UUID.randomUUID());
+        newCustomer.setCustomerId(UUID.randomUUID().toString());
         newCustomer.setStatus(Person.PersonStatus.ACTIVE);
         newCustomer.setCustomerStatus(Customer.CustomerStatus.ACTIVE);
         newCustomer.setCreatedAt(LocalDateTime.now());
@@ -174,16 +179,16 @@ public class CustomerServiceTest {
     @DisplayName("Should update customer successfully")
     void updateCustomer_ShouldUpdateAndReturnCustomer() {
 
-        when(customerRepository.findById(anyLong())).thenReturn(Optional.of(testCustomer));
+        when(customerRepository.findByCustomerId(anyString())).thenReturn(Optional.of(testCustomer));
         when(customerRepository.save(any(Customer.class))).thenReturn(testCustomer);
         doNothing().when(applicationEventProducer).publish(any(CustomerModifiedEvent.class));
 
 
-        CustomerDTO result = customerService.updateCustomer(1L, updateRequestDTO);
+        CustomerDTO result = customerService.updateCustomer(UUID.randomUUID().toString(), updateRequestDTO);
 
 
         assertNotNull(result);
-        verify(customerRepository, times(1)).findById(anyLong());
+        verify(customerRepository, times(1)).findByCustomerId(anyString());
         verify(customerRepository, times(1)).save(any(Customer.class));
         verify(applicationEventProducer, times(1)).publish(any(CustomerModifiedEvent.class));
     }
@@ -192,16 +197,16 @@ public class CustomerServiceTest {
     @DisplayName("Should remove customer successfully")
     void removeCustomer_ShouldRemoveCustomer() {
 
-        when(customerRepository.findById(anyLong())).thenReturn(Optional.of(testCustomer));
-        doNothing().when(customerRepository).delete(any(Customer.class));
+        when(customerRepository.findByCustomerId(anyString())).thenReturn(Optional.of(testCustomer));
+        when(customerRepository.save(any(Customer.class))).thenReturn(testCustomer);
         doNothing().when(applicationEventProducer).publish(any(CustomerDeletedEvent.class));
 
 
-        customerService.removeCustomer(1L);
+        customerService.removeCustomer(UUID.randomUUID().toString());
 
 
-        verify(customerRepository, times(1)).findById(anyLong());
-        verify(customerRepository, times(1)).delete(any(Customer.class));
+        verify(customerRepository, times(1)).findByCustomerId(anyString());
+        verify(customerRepository, times(1)).save(any(Customer.class));
         verify(applicationEventProducer, times(1)).publish(any(CustomerDeletedEvent.class));
     }
 }

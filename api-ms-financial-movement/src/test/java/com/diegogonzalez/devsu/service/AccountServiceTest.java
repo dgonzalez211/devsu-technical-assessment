@@ -57,7 +57,7 @@ public class AccountServiceTest {
         testCustomer = new Customer();
         testCustomer.setId(1L);
         testCustomer.setUuid(UUID.randomUUID());
-        testCustomer.setCustomerId(UUID.randomUUID());
+        testCustomer.setCustomerId(UUID.randomUUID().toString());
         testCustomer.setFirstName("John");
         testCustomer.setLastName("Doe");
 
@@ -80,7 +80,7 @@ public class AccountServiceTest {
         createRequestDTO.setAccountNumber("1000100010002");
         createRequestDTO.setAccountType(Account.AccountType.CHECKING);
         createRequestDTO.setInitialBalance(new BigDecimal("2000.00"));
-        createRequestDTO.setCustomerId(testCustomer.getUuid());
+        createRequestDTO.setCustomerId(testCustomer.getUuid().toString());
     }
 
     @Test
@@ -88,7 +88,7 @@ public class AccountServiceTest {
     void listAccounts_ShouldReturnAllAccounts() {
 
         Page<Account> accountPage = new PageImpl<>(List.of(testAccount));
-        when(accountRepository.findAllAccounts(any(Pageable.class))).thenReturn(accountPage);
+        when(accountRepository.findAll(any(Pageable.class))).thenReturn(accountPage);
 
 
         Page<AccountDTO> result = accountService.listAccounts(Pageable.unpaged());
@@ -98,7 +98,7 @@ public class AccountServiceTest {
         assertFalse(result.isEmpty());
         assertEquals(1, result.getTotalElements());
         assertEquals(testAccountDTO.getAccountNumber(), result.getContent().get(0).getAccountNumber());
-        verify(accountRepository, times(1)).findAllAccounts(any(Pageable.class));
+        verify(accountRepository, times(1)).findAll(any(Pageable.class));
     }
 
     @Test
@@ -169,7 +169,7 @@ public class AccountServiceTest {
                 .customer(testCustomer)
                 .build();
 
-        when(customerService.findCustomer(any(UUID.class))).thenReturn(testCustomer);
+        when(customerService.findCustomer(any(String.class))).thenReturn(testCustomer);
         when(accountRepository.save(any(Account.class))).thenReturn(newAccount);
 
 
@@ -180,7 +180,7 @@ public class AccountServiceTest {
         assertEquals(createRequestDTO.getAccountNumber(), result.getAccountNumber());
         assertEquals(createRequestDTO.getAccountType(), result.getAccountType());
         assertEquals(createRequestDTO.getInitialBalance(), result.getInitialBalance());
-        verify(customerService, times(1)).findCustomer(any(UUID.class));
+        verify(customerService, times(1)).findCustomer(any(String.class));
         verify(accountRepository, times(1)).save(any(Account.class));
     }
 
@@ -192,7 +192,7 @@ public class AccountServiceTest {
 
 
         assertThrows(MicroserviceException.class, () -> accountService.createAccount(createRequestDTO));
-        verify(customerService, never()).findCustomer(any(UUID.class));
+        verify(customerService, never()).findCustomer(any(String.class));
         verify(accountRepository, never()).save(any(Account.class));
     }
 

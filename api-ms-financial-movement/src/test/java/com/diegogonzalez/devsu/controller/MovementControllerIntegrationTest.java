@@ -66,7 +66,7 @@ public class MovementControllerIntegrationTest {
         testCustomer = new Customer();
         testCustomer.setId(1L);
         testCustomer.setUuid(customerId);
-        testCustomer.setCustomerId(customerId);
+        testCustomer.setCustomerId(customerId.toString());
         testCustomer.setFirstName("John");
         testCustomer.setLastName("Doe");
 

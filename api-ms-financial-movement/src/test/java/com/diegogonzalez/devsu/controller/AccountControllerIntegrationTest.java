@@ -56,7 +56,7 @@ public class AccountControllerIntegrationTest {
         testCustomer = new Customer();
         testCustomer.setId(1L);
         testCustomer.setUuid(customerId);
-        testCustomer.setCustomerId(customerId);
+        testCustomer.setCustomerId(customerId.toString());
         testCustomer.setFirstName("John");
         testCustomer.setLastName("Doe");
 
@@ -79,7 +79,7 @@ public class AccountControllerIntegrationTest {
         createRequestDTO.setAccountNumber("1000100010002");
         createRequestDTO.setAccountType(Account.AccountType.CHECKING);
         createRequestDTO.setInitialBalance(new BigDecimal("2000.00"));
-        createRequestDTO.setCustomerId(customerId);
+        createRequestDTO.setCustomerId(customerId.toString());
     }
 
     @Test

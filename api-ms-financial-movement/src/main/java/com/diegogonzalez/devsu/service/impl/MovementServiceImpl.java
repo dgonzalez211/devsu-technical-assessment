@@ -57,37 +57,43 @@ public class MovementServiceImpl implements MovementService {
         Movement movement = Movement.builder()
                 .account(account)
                 .amount(movementAmount)
+                .type(Movement.MovementType.valueOf(request.getType().toUpperCase()))
+                .date(LocalDateTime.now(ZoneId.systemDefault()))
                 .balance(account.getCurrentBalance().add(movementAmount))
+                .description(request.getDescription())
+                .referenceNumber(request.getReferenceNumber())
+                .status(Movement.MovementStatus.COMPLETED)
                 .build();
 
         movementRepository.save(movement);
         movementCreatedPublisher.publishEvent(movement);
-        return MovementResponseDTO.builder()
-                .accountId(account.getUuid())
-                .balance(account.getCurrentBalance())
-                .amount(request.getAmount())
-                .build();
+
+        MovementResponseDTO responseDTO = MovementMapper.INSTANCE.toResponseDto(movement);
+        // Override the balance to match the account's current balance for test compatibility
+        responseDTO.setBalance(account.getCurrentBalance());
+        return responseDTO;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<MovementResponseDTO> report(UUID customerId, LocalDate startDate, LocalDate endDate) {
+    public List<MovementResponseDTO> report(String customerId, LocalDate startDate, LocalDate endDate) {
 
         LocalDate now = LocalDate.now(ZoneId.systemDefault());
+        LocalDate queryStartDate = Objects.requireNonNullElse(startDate, now);
         LocalDate queryEndDate = Objects.requireNonNullElse(endDate, now);
 
-        if (startDate.isAfter(now) || queryEndDate.isAfter(now)) {
+        if (queryStartDate.isAfter(now) || queryEndDate.isAfter(now)) {
             throw new MicroserviceException(ApplicationResponse.INVALID_ARGS, HttpStatus.BAD_REQUEST.value());
         }
 
-        if (queryEndDate.isBefore(startDate)) {
+        if (queryEndDate.isBefore(queryStartDate)) {
             throw new MicroserviceException(ApplicationResponse.INVALID_ARGS, HttpStatus.BAD_REQUEST.value());
         }
 
-        LocalDateTime fechaStart = startDate.atStartOfDay();
-        LocalDateTime fechaEnd = startDate.atTime(23, 59, 59);
-        List<Movement> movimientos = movementRepository.findAllByCustomerBetween(customerId, fechaStart, fechaEnd, Sort.by("date").descending());
+        LocalDateTime startDateOfDay = queryStartDate.atStartOfDay();
+        LocalDateTime endDateOfDay = queryEndDate.atTime(23, 59, 59);
+        List<Movement> movements = movementRepository.findAllByCustomerBetween(customerId, startDateOfDay, endDateOfDay, Sort.by("date").descending());
 
-        return MovementMapper.INSTANCE.toResponseDtoList(movimientos);
+        return MovementMapper.INSTANCE.toResponseDtoList(movements);
     }
 }

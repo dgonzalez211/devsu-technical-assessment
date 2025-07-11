@@ -54,7 +54,7 @@ public class CustomerControllerIntegrationTest {
 
         testCustomer = new Customer();
         testCustomer.setUuid(UUID.randomUUID());
-        testCustomer.setCustomerId(UUID.randomUUID());
+        testCustomer.setCustomerId(UUID.randomUUID().toString());
         testCustomer.setFirstName("John");
         testCustomer.setLastName("Doe");
         testCustomer.setIdentification("1234567890");

@@ -3,8 +3,6 @@ package com.diegogonzalez.devsu.event.customer;
 import com.diegogonzalez.devsu.event.AbstractEvent;
 import lombok.Getter;
 
-import java.util.UUID;
-
 /*
  * Author: Diego González
  *
@@ -19,11 +17,11 @@ import java.util.UUID;
 public class CustomerDeletedEvent extends AbstractEvent {
 
     private static final String EVENT_TYPE = "CUSTOMER_DELETED";
-    private final UUID customerId;
+    private final String customerId;
     private final String firstName;
     private final String lastName;
 
-    public CustomerDeletedEvent(UUID customerId, String firstName, String lastName) {
+    public CustomerDeletedEvent(String customerId, String firstName, String lastName) {
         super(EVENT_TYPE);
         this.customerId = customerId;
         this.firstName = firstName;

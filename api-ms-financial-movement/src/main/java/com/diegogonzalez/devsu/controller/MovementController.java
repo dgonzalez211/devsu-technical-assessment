@@ -46,7 +46,7 @@ public class MovementController {
             @ApiResponse(responseCode = "500", description = "General error"),
     })
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<IntegrationResponse> registrarMovimiento(@RequestBody MovementCreateRequestDTO request) {
+    public ResponseEntity<IntegrationResponse> registerMovement(@RequestBody MovementCreateRequestDTO request) {
         return ResponseEntity.ok(IntegrationResponse.success(service.register(request)));
     }
 
@@ -58,9 +58,9 @@ public class MovementController {
             @ApiResponse(responseCode = "400", description = "Invalid request"),
             @ApiResponse(responseCode = "500", description = "General error"),
     })
-    public ResponseEntity<IntegrationResponse> reporte(@PathVariable UUID customerId,
-                                                       @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate startDate,
-                                                       @RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate endDate) {
+    public ResponseEntity<IntegrationResponse> report(@PathVariable String customerId,
+                                                      @RequestParam(required = false) @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate startDate,
+                                                      @RequestParam(required = false) @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate endDate) {
         return ResponseEntity.ok(IntegrationResponse.success(service.report(customerId, startDate, endDate)));
     }
 

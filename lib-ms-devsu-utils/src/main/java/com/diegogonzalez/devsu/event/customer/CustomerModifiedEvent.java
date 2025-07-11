@@ -1,9 +1,9 @@
 package com.diegogonzalez.devsu.event.customer;
 
+import com.diegogonzalez.devsu.entity.Customer;
+import com.diegogonzalez.devsu.entity.Person;
 import com.diegogonzalez.devsu.event.AbstractEvent;
 import lombok.Getter;
-
-import java.util.UUID;
 
 /*
  * Author: Diego González
@@ -19,14 +19,38 @@ import java.util.UUID;
 public class CustomerModifiedEvent extends AbstractEvent {
 
     private static final String EVENT_TYPE = "CUSTOMER_MODIFIED";
-    private final UUID customerId;
+    private final String customerId;
     private final String firstName;
     private final String lastName;
+    private final String identification;
+    private final Person.Gender gender;
+    private final Integer age;
+    private final String password;
+    private final Customer.CustomerStatus customerStatus;
+    private final String address;
+    private final String email;
 
-    public CustomerModifiedEvent(UUID customerId, String firstName, String lastName) {
+    public CustomerModifiedEvent(
+            String customerId, 
+            String firstName, 
+            String lastName, 
+            String identification, 
+            Person.Gender gender, 
+            Integer age, 
+            String password, 
+            Customer.CustomerStatus customerStatus,
+            String address,
+            String email) {
         super(EVENT_TYPE);
         this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.identification = identification;
+        this.gender = gender;
+        this.age = age;
+        this.password = password;
+        this.customerStatus = customerStatus;
+        this.address = address;
+        this.email = email;
     }
 }

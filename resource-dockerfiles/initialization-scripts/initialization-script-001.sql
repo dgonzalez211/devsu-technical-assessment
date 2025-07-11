@@ -120,6 +120,67 @@ VALUES (UUID(), '1000100010001', 'SAVINGS', 1000.00, 1250.50, 'ACTIVE', 'USD', 1
 
 USE financial_movement;
 
+CREATE TABLE persons
+(
+    id             BIGINT AUTO_INCREMENT PRIMARY KEY,
+    uuid           CHAR(36)    NOT NULL UNIQUE,
+    identification VARCHAR(20) NOT NULL,
+    firstName      VARCHAR(50) NOT NULL,
+    lastName       VARCHAR(50) NOT NULL,
+    gender         ENUM('MALE', 'FEMALE', 'OTHER') NOT NULL,
+    age            INT         NOT NULL,
+    birthDate      DATE,
+    address        VARCHAR(255),
+    email          VARCHAR(100),
+    status         ENUM('ACTIVE', 'INACTIVE', 'SUSPENDED', 'DELETED', 'LOCKED', 'CLOSED') NOT NULL DEFAULT 'ACTIVE',
+    createdAt      DATETIME    NOT NULL,
+    updatedAt      DATETIME,
+    createdBy      VARCHAR(50) NOT NULL,
+    updatedBy      VARCHAR(50),
+    version        BIGINT DEFAULT 0,
+    CONSTRAINT uk_person_identification UNIQUE (identification),
+    CONSTRAINT uk_person_email UNIQUE (email)
+);
+
+CREATE INDEX idx_person_last_name ON persons (lastName);
+CREATE INDEX idx_person_status ON persons (status);
+
+CREATE TABLE customers
+(
+    person_id             BIGINT PRIMARY KEY,
+    customer_id           CHAR(36)     NOT NULL,
+    password              VARCHAR(100) NOT NULL,
+    customer_status       ENUM('ACTIVE', 'INACTIVE', 'SUSPENDED', 'DELETED', 'LOCKED', 'CLOSED') NOT NULL,
+    last_login_at         DATETIME,
+    password_reset_token  VARCHAR(100),
+    password_reset_expiry DATETIME,
+    failed_login_attempts INT DEFAULT 0,
+    locked_until          DATETIME,
+    CONSTRAINT uk_customer_customer_id UNIQUE (customer_id),
+    CONSTRAINT fk_customer_person FOREIGN KEY (person_id) REFERENCES persons (id) ON DELETE CASCADE
+);
+
+-- Insert the same sample data for persons and customers as in customer_identity database
+INSERT INTO persons (uuid, identification, firstName, lastName, gender, age, birthDate, address, email, status,
+                     createdAt, createdBy, version)
+VALUES (UUID(), 'ABCDE12345', 'John', 'Doe', 'MALE', 35, '1988-05-15', '123 Main St, Anytown', 'john.doe@example.com',
+        'ACTIVE', NOW(), 'SYSTEM', 0),
+       (UUID(), 'FGHIJ67890', 'Jane', 'Smith', 'FEMALE', 28, '1995-08-22', '456 Oak Ave, Somewhere',
+        'jane.smith@example.com', 'ACTIVE', NOW(), 'SYSTEM', 0),
+       (UUID(), 'KLMNO12345', 'Robert', 'Johnson', 'MALE', 42, '1981-03-10', '789 Pine Rd, Elsewhere',
+        'robert.johnson@example.com', 'ACTIVE', NOW(), 'SYSTEM', 0),
+       (UUID(), 'PQRST67890', 'Maria', 'Garcia', 'FEMALE', 31, '1992-11-05', '101 Cedar Ln, Nowhere',
+        'maria.garcia@example.com', 'ACTIVE', NOW(), 'SYSTEM', 0),
+       (UUID(), 'UVWXY12345', 'David', 'Brown', 'MALE', 45, '1978-07-30', '202 Elm St, Anywhere',
+        'david.brown@example.com', 'INACTIVE', NOW(), 'SYSTEM', 0);
+
+INSERT INTO customers (person_id, customer_id, password, customer_status, last_login_at, failed_login_attempts)
+VALUES (1, UUID(), '$2a$10$Xt8Yt1EoWvZj3rZbgRlKXOQQhHRJlj7BKJJg5.yQzJ/Zs5pXVEJyO', 'ACTIVE', NOW(), 0),
+       (2, UUID(), '$2a$10$Xt8Yt1EoWvZj3rZbgRlKXOQQhHRJlj7BKJJg5.yQzJ/Zs5pXVEJyO', 'ACTIVE', NOW(), 0),
+       (3, UUID(), '$2a$10$Xt8Yt1EoWvZj3rZbgRlKXOQQhHRJlj7BKJJg5.yQzJ/Zs5pXVEJyO', 'ACTIVE', NOW(), 0),
+       (4, UUID(), '$2a$10$Xt8Yt1EoWvZj3rZbgRlKXOQQhHRJlj7BKJJg5.yQzJ/Zs5pXVEJyO', 'ACTIVE', NOW(), 0),
+       (5, UUID(), '$2a$10$Xt8Yt1EoWvZj3rZbgRlKXOQQhHRJlj7BKJJg5.yQzJ/Zs5pXVEJyO', 'INACTIVE', NOW(), 0);
+
 CREATE TABLE accounts
 (
     id                BIGINT AUTO_INCREMENT PRIMARY KEY,

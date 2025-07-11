@@ -20,7 +20,7 @@ import java.util.UUID;
  */
 public interface MovementService {
 
-    MovementResponseDTO register(MovementCreateRequestDTO movimientoRequest);
+    MovementResponseDTO register(MovementCreateRequestDTO request);
 
-    List<MovementResponseDTO> report(UUID customerId, LocalDate startDate, @Nullable LocalDate endDate);
+    List<MovementResponseDTO> report(String customerId, LocalDate startDate, @Nullable LocalDate endDate);
 }

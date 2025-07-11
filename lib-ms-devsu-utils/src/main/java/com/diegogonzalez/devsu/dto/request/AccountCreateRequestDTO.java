@@ -46,7 +46,7 @@ public class AccountCreateRequestDTO implements Serializable {
     private String currencyCode;
 
     @NotNull(message = "Customer ID is required")
-    private UUID customerId;
+    private String customerId;
 
     private BigDecimal interestRate;
     private BigDecimal overdraftLimit;

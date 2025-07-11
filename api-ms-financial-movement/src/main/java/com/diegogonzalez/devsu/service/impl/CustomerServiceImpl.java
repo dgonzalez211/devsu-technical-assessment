@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-import java.util.UUID;
 
 /*
  * Author: Diego González
@@ -33,18 +32,18 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Transactional(readOnly = true)
     @Override
-    public Customer findCustomer(UUID customerId) {
-        return customerRepository.findCustomerByUuid(customerId)
+    public Customer findCustomer(String customerId) {
+        return customerRepository.findCustomerByCustomerId(customerId)
                 .or(() -> Optional.ofNullable(retrieveExternalCustomer(customerId)))
                 .orElseThrow(() -> new MicroserviceException(ApplicationResponse.CUSTOMER_NOT_FOUND));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Customer retrieveExternalCustomer(UUID customerId) {
-        CustomerDTO externalCustomer = restClient.retrieveExternalCustomer(customerId.toString());
+    public Customer retrieveExternalCustomer(String customerId) {
+        CustomerDTO externalCustomer = restClient.retrieveExternalCustomer(customerId);
         Customer customer = Customer.builder()
-                .customerId(UUID.fromString(externalCustomer.getCustomerId()))
+                .customerId(externalCustomer.getCustomerId())
                 .firstName(externalCustomer.getFirstName())
                 .lastName(externalCustomer.getLastName())
                 .build();

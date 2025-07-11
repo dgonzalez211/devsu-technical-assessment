@@ -42,7 +42,6 @@ public class Movement implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @UuidGenerator
     @Column(name = "uuid", updatable = false, nullable = false, unique = true)
     private UUID uuid;
 
@@ -89,6 +88,9 @@ public class Movement implements Serializable {
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
+        if (uuid == null) {
+            uuid = UUID.randomUUID();
+        }
         if (referenceNumber == null) {
             referenceNumber = generateReferenceNumber();
         }

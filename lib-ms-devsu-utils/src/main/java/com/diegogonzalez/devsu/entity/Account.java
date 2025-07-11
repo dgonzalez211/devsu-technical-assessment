@@ -45,7 +45,6 @@ public class Account implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @UuidGenerator
     @Column(name = "uuid", updatable = false, nullable = false, unique = true)
     private UUID uuid;
 
@@ -114,6 +113,9 @@ public class Account implements Serializable {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
         openedAt = LocalDateTime.now();
+        if (uuid == null) {
+            uuid = UUID.randomUUID();
+        }
         if (currentBalance == null) {
             currentBalance = initialBalance;
         }

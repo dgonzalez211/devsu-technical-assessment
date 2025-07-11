@@ -54,7 +54,7 @@ public class AccountDTO implements Serializable {
     private String currencyCode;
 
     @NotNull(message = "Customer ID is required")
-    private UUID customerId;
+    private String customerId;
 
     private LocalDateTime openedAt;
     private LocalDateTime lastTransactionAt;

@@ -26,5 +26,5 @@ public interface MovementRepository extends JpaRepository<Movement, Long> {
 
     @Query("SELECT m, c FROM Movement m LEFT JOIN m.account c  " +
             " LEFT JOIN c.customer c1 WHERE c1.customerId = ?1 AND m.date between ?2 AND ?3")
-    List<Movement> findAllByCustomerBetween(UUID customerId, LocalDateTime startDate, LocalDateTime endDate, Sort sort);
+    List<Movement> findAllByCustomerBetween(String customerId, LocalDateTime startDate, LocalDateTime endDate, Sort sort);
 }

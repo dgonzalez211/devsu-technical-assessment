@@ -15,6 +15,6 @@ import com.diegogonzalez.devsu.event.AbstractEvent;
  */
 public interface CustomerIntegrationRepository {
 
-    void handleEvent(AbstractEvent evento);
+    void handleEvent(AbstractEvent event);
 
 }

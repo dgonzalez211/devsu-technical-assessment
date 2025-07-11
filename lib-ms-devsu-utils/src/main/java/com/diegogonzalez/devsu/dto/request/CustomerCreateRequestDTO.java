@@ -1,9 +1,8 @@
 package com.diegogonzalez.devsu.dto.request;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import com.diegogonzalez.devsu.entity.Customer;
+import com.diegogonzalez.devsu.entity.Person;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -43,10 +42,24 @@ public class CustomerCreateRequestDTO implements Serializable {
     private String address;
 
     @NotBlank(message = "Customer ID is required")
-    @Pattern(regexp = "^[A-Z0-9]{5,15}$", message = "Invalid customer ID format")
+    @Pattern(regexp = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$", message = "Invalid customer ID format")
     private String customerId;
 
     @NotBlank(message = "Password is required")
     @Size(min = 8, max = 100, message = "Password must be between 8 and 100 characters")
     private String password;
+
+    @NotBlank(message = "Identification is required")
+    @Pattern(regexp = "^[A-Z0-9]{5,20}$", message = "Invalid identification format")
+    private String identification;
+
+    @NotNull(message = "Gender is required")
+    private Person.Gender gender;
+
+    @NotNull(message = "Age is required")
+    @Positive(message = "Age must be a positive number")
+    private Integer age;
+
+    @NotNull(message = "Status is required")
+    private Customer.CustomerStatus customerStatus;
 }

@@ -34,7 +34,7 @@ public class AccountResponseDTO {
     private BigDecimal currentBalance;
     private AccountStatus status;
     private String currencyCode;
-    private UUID customerId;
+    private String customerId;
     private String customerFirstName;
     private String customerLastName;
     private LocalDateTime openedAt;

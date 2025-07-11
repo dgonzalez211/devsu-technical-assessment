@@ -16,8 +16,6 @@ import com.diegogonzalez.devsu.event.customer.CustomerModifiedEvent;
 import com.diegogonzalez.devsu.exception.ApplicationResponse;
 import com.diegogonzalez.devsu.exception.MicroserviceException;
 import com.diegogonzalez.devsu.utils.FieldValidator;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
@@ -28,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 
 /*
  * Author: Diego González
@@ -51,7 +50,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<CustomerDTO> findCustomers() {
         log.debug("Fetching all customers");
-        List<CustomerDTO> customers = customerRepository.findAll(Sort.by(Sort.Direction.ASC, "name"))
+        List<CustomerDTO> customers = customerRepository.findAll(Sort.by(Sort.Direction.ASC, "firstName"))
                 .stream()
                 .map(CustomerMapper.INSTANCE::toDto)
                 .toList();
@@ -64,7 +63,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerDTO findCustomerById(Long customerId) {
+    public CustomerDTO findCustomerById(String customerId) {
         log.debug("Finding customer with ID: {}", customerId);
         return CustomerMapper.INSTANCE.toDto(findCustomerEntityById(customerId));
     }
@@ -86,7 +85,18 @@ public class CustomerServiceImpl implements CustomerService {
         Customer savedCustomer = customerRepository.save(customer);
 
         applicationEventProducer.publish(
-                new CustomerCreatedEvent(savedCustomer.getCustomerId(), savedCustomer.getFirstName(), savedCustomer.getLastName())
+                new CustomerCreatedEvent(
+                        savedCustomer.getCustomerId(),
+                        savedCustomer.getFirstName(),
+                        savedCustomer.getLastName(),
+                        savedCustomer.getIdentification(),
+                        savedCustomer.getGender(),
+                        savedCustomer.getAge(),
+                        savedCustomer.getPassword(),
+                        savedCustomer.getCustomerStatus(),
+                        savedCustomer.getAddress(),
+                        savedCustomer.getEmail()
+                )
         );
 
         return CustomerMapper.INSTANCE.toDto(savedCustomer);
@@ -94,14 +104,25 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    public CustomerDTO updateCustomer(Long customerId, CustomerUpdateRequestDTO request) {
+    public CustomerDTO updateCustomer(String customerId, CustomerUpdateRequestDTO request) {
         log.debug("Updating customer with ID: {}, new data: {}", customerId, request);
         Customer customer = findCustomerEntityById(customerId);
         updateCustomerFields(customer, request);
         Customer updatedCustomer = customerRepository.save(customer);
 
         applicationEventProducer.publish(
-                new CustomerModifiedEvent(updatedCustomer.getCustomerId(), updatedCustomer.getFirstName(), updatedCustomer.getLastName())
+                new CustomerModifiedEvent(
+                        updatedCustomer.getCustomerId(),
+                        updatedCustomer.getFirstName(),
+                        updatedCustomer.getLastName(),
+                        updatedCustomer.getIdentification(),
+                        updatedCustomer.getGender(),
+                        updatedCustomer.getAge(),
+                        updatedCustomer.getPassword(),
+                        updatedCustomer.getCustomerStatus(),
+                        updatedCustomer.getAddress(),
+                        updatedCustomer.getEmail()
+                )
         );
 
         return CustomerMapper.INSTANCE.toDto(updatedCustomer);
@@ -109,22 +130,34 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    public void removeCustomer(Long customerId) {
+    public void removeCustomer(String customerId) {
         log.debug("Soft deleting customer with ID: {}", customerId);
         Customer customer = findCustomerEntityById(customerId);
         customer.setStatus(Person.PersonStatus.INACTIVE);
         customerRepository.save(customer);
 
         applicationEventProducer.publish(
-                new CustomerDeletedEvent(customer.getCustomerId(), customer.getFirstName(), customer.getLastName())
+                new CustomerDeletedEvent(
+                        customer.getCustomerId(),
+                        customer.getFirstName(),
+                        customer.getLastName()
+                )
         );
     }
 
-    private Customer findCustomerEntityById(Long customerId) {
-        return customerRepository.findById(customerId)
-                .orElseThrow(() -> new MicroserviceException(
-                        ApplicationResponse.CUSTOMER_NOT_FOUND,
-                        HttpStatus.NOT_FOUND.value()));
+    private Customer findCustomerEntityById(String customerId) {
+        try {
+            return customerRepository.findByCustomerId(customerId)
+                    .orElseThrow(() -> new MicroserviceException(
+                            ApplicationResponse.CUSTOMER_NOT_FOUND,
+                            HttpStatus.NOT_FOUND.value()));
+        } catch (IllegalArgumentException e) {
+            // If not a valid UUID, try to find by customerId
+            return customerRepository.findByUuid(UUID.fromString(customerId))
+                    .orElseThrow(() -> new MicroserviceException(
+                            ApplicationResponse.CUSTOMER_NOT_FOUND,
+                            HttpStatus.NOT_FOUND.value()));
+        }
     }
 
     private void updateCustomerFields(Customer customer, CustomerUpdateRequestDTO request) {

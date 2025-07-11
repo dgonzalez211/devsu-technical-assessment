@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -24,7 +25,7 @@ import java.util.UUID;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerDTO {
+public class CustomerDTO implements Serializable {
 
     private UUID uuid;
 
@@ -46,7 +47,7 @@ public class CustomerDTO {
     private String address;
 
     @NotBlank(message = "Customer ID is required")
-    @Pattern(regexp = "^[A-Z0-9]{5,15}$", message = "Invalid customer ID format")
+    @Pattern(regexp = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$", message = "Invalid customer ID format")
     private String customerId;
 
     @NotNull(message = "Status is required")

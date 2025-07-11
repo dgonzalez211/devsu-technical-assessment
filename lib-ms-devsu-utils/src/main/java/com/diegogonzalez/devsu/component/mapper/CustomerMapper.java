@@ -31,7 +31,7 @@ public interface CustomerMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "uuid", ignore = true)
-    @Mapping(target = "status", constant = "ACTIVE")
+    @Mapping(target = "status", source = "customerStatus", defaultValue = "ACTIVE")
     @Mapping(target = "accounts", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
@@ -42,6 +42,10 @@ public interface CustomerMapper {
     @Mapping(target = "lockedUntil", ignore = true)
     @Mapping(target = "firstName", source = "firstName")
     @Mapping(target = "lastName", source = "lastName")
+    @Mapping(target = "identification", source = "identification")
+    @Mapping(target = "gender", source = "gender")
+    @Mapping(target = "age", source = "age")
+    @Mapping(target = "customerStatus", source = "customerStatus")
     Customer toEntity(CustomerCreateRequestDTO dto);
 
     CustomerDTO toDto(Customer entity);

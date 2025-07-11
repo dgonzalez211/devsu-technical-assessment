@@ -59,7 +59,7 @@ public class MovementServiceTest {
         testCustomer = new Customer();
         testCustomer.setId(1L);
         testCustomer.setUuid(customerId);
-        testCustomer.setCustomerId(customerId);
+        testCustomer.setCustomerId(customerId.toString());
         testCustomer.setFirstName("John");
         testCustomer.setLastName("Doe");
 
@@ -170,21 +170,21 @@ public class MovementServiceTest {
         List<Movement> movements = List.of(testMovement);
 
         when(movementRepository.findAllByCustomerBetween(
-                eq(customerId),
+                eq(customerId.toString()),
                 any(LocalDateTime.class),
                 any(LocalDateTime.class),
                 any(Sort.class)
         )).thenReturn(movements);
 
 
-        List<MovementResponseDTO> result = movementService.report(customerId, startDate, endDate);
+        List<MovementResponseDTO> result = movementService.report(customerId.toString(), startDate, endDate);
 
 
         assertNotNull(result);
         assertFalse(result.isEmpty());
         assertEquals(1, result.size());
         verify(movementRepository, times(1)).findAllByCustomerBetween(
-                eq(customerId),
+                eq(customerId.toString()),
                 any(LocalDateTime.class),
                 any(LocalDateTime.class),
                 any(Sort.class)
@@ -199,9 +199,9 @@ public class MovementServiceTest {
         LocalDate endDate = LocalDate.now().minusDays(30);
 
 
-        assertThrows(MicroserviceException.class, () -> movementService.report(customerId, startDate, endDate));
+        assertThrows(MicroserviceException.class, () -> movementService.report(customerId.toString(), startDate, endDate));
         verify(movementRepository, never()).findAllByCustomerBetween(
-                any(UUID.class),
+                any(String.class),
                 any(LocalDateTime.class),
                 any(LocalDateTime.class),
                 any(Sort.class)
@@ -216,9 +216,9 @@ public class MovementServiceTest {
         LocalDate endDate = LocalDate.now().plusDays(30);
 
 
-        assertThrows(MicroserviceException.class, () -> movementService.report(customerId, startDate, endDate));
+        assertThrows(MicroserviceException.class, () -> movementService.report(customerId.toString(), startDate, endDate));
         verify(movementRepository, never()).findAllByCustomerBetween(
-                any(UUID.class),
+                any(String.class),
                 any(LocalDateTime.class),
                 any(LocalDateTime.class),
                 any(Sort.class)

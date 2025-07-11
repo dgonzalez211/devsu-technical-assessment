@@ -46,9 +46,9 @@ public class Customer extends Person {
     private static final long serialVersionUID = 1L;
 
     @NotBlank(message = "Customer ID is required")
-    @Pattern(regexp = "^[A-Z0-9-]{5,32}$", message = "Invalid customer ID format")
-    @Column(name = "customer_id", length = 15)
-    private UUID customerId;
+    @Pattern(regexp = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$", message = "Invalid customer ID format")
+    @Column(name = "customer_id", length = 36)
+    private String customerId;
 
     @NotBlank(message = "Password is required")
     @Size(min = 8, max = 100, message = "Password must be between 8 and 100 characters")

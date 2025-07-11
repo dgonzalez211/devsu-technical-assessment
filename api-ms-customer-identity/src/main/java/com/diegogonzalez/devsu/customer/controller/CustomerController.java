@@ -57,7 +57,7 @@ public class CustomerController {
             @ApiResponse(responseCode = "404", description = "Customer not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ResponseEntity<IntegrationResponse> getCustomerById(@PathVariable Long customerId) {
+    public ResponseEntity<IntegrationResponse> getCustomerById(@PathVariable String customerId) {
         return ResponseEntity.ok(IntegrationResponse.success(customerService.findCustomerById(customerId)));
     }
 
@@ -82,7 +82,7 @@ public class CustomerController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<IntegrationResponse> updateCustomer(
-            @PathVariable Long customerId,
+            @PathVariable String customerId,
             @RequestBody CustomerUpdateRequestDTO customerRequest) {
         return ResponseEntity.ok(IntegrationResponse.success(customerService.updateCustomer(customerId, customerRequest)));
     }
@@ -95,7 +95,7 @@ public class CustomerController {
             @ApiResponse(responseCode = "404", description = "Customer not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ResponseEntity<IntegrationResponse> deleteCustomer(@PathVariable Long customerId) {
+    public ResponseEntity<IntegrationResponse> deleteCustomer(@PathVariable String customerId) {
         customerService.removeCustomer(customerId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(IntegrationResponse.success());
     }
